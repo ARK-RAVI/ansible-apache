@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: yes 
+  tasks:
+  - name: Installing Latest version of Apache
+    yum: pkg=httpd state=latest
+  - name: Copying the demo file
+    copy: src=/root/index.html dest=/var/www/html
+  - name: (Enable it on System Boot)
+    service: name=httpd enabled=yes
+    notify:
+  - name: start apache
+    service: name=httpd state=started
